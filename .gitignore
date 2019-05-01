@@ -1,3 +1,4 @@
+**/build
 HELP.md
 .gradle
 /build/
@@ -17,7 +18,7 @@ HELP.md
 *.iws
 *.iml
 *.ipr
-/out/
+**/out/
 
 ### NetBeans ###
 /nbproject/private/
