@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 
 @RestController
-@RequestMapping("/v1/task")
+@RequestMapping("/v1/tasks")
 public class TaskController {
     @Autowired
     private DbService dbService;
@@ -25,7 +25,7 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getTask")
     public TaskDto getTask(Long taskId) {
-        return taskMapper.maptToTaskDto(dbService.getTaskById(taskId));
+        return taskMapper.mapToTaskDto(dbService.getTaskById(taskId));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")
