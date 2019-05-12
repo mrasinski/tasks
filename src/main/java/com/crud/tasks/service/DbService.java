@@ -17,6 +17,6 @@ public class DbService {
     }
 
     public Task getTaskById(Long id) {
-        return taskRepository.findTaskById(id);
+        return taskRepository.findById(id).orElse(null);
     }
 }
