@@ -47,10 +47,11 @@ public class TrelloClient {
 
         TrelloBoardDto[] boardResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
 
-        if (boardResponse != null) {
+        return Arrays.asList(Optional.ofNullable(boardResponse).orElse(new TrelloBoardDto[0]));
+        /*if (boardResponse != null) {
             return Arrays.asList(boardResponse);
         }
-        return new ArrayList<>();
+        return new ArrayList<>();*/
     }
 
     private URI getUri() {
