@@ -1,23 +1,21 @@
-package com.crud.tasks.domain;
+package com.crud.tasks.domain.dto;
 
+import com.crud.tasks.domain.AttachmentByType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TrelloListDto {
+public class BadgesDto {
 
-    @JsonProperty("id")
-    private String id;
+    @JsonProperty("votes")
+    private int votes;
 
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("closed")
-    private boolean isClosed;
+    @JsonProperty("attachmentsByType")
+    private AttachmentByType attachments;
 }
