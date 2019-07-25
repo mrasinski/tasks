@@ -5,6 +5,7 @@ import com.crud.tasks.domain.dto.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
 import com.google.gson.Gson;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,20 @@ public class TaskControllerTest {
 
     @MockBean
     private TaskMapper taskMapper;
+
+    @Test
+    public void shouldFetchTrelloTaskList() throws Exception {
+        //Given
+        List<TaskDto> trelloTask = new ArrayList<>();
+        TaskDto taskDto = new TaskDto(1L, "Test taskDto", "Test content");
+        trelloTask.add(taskDto);
+        when(taskController.getTasks()).thenReturn(trelloTask);
+
+        //When & Then
+        mockMvc.perform(get("/v1/tasks/getTasks").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$", hasSize(1)));
+    }
 
     @Test
     public void shouldFetchEmptyTrelloTaskList() throws Exception {
@@ -119,5 +134,23 @@ public class TaskControllerTest {
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("Test taskDto")))
                 .andExpect(jsonPath("$.content", is("Test content")));
+    }
+
+    @Test
+    public void testDeleteTask() throws Exception {
+        //Given
+        TaskDto taskDto = new TaskDto(
+                1L,
+                "Test taskDto",
+                "Test content"
+        );
+
+        //When & Then
+        mockMvc.perform(delete("/v1/tasks/deleteTask").param("taskId", "1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isOk());
+
+        verify(taskController, times(1)).deleteTask(anyLong());
     }
 }
