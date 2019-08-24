@@ -31,6 +31,15 @@ public class SimpleEmailService {
             LOGGER.error("Failed to sent email: " + e.getMessage(), e);
         }
     }
+    public void sendDaily(final Mail mail) {
+        LOGGER.info("Emal prep...");
+        try {
+            javaMailSender.send(createDailyMimeMessage(mail));
+            LOGGER.info("Email sent");
+        } catch (MailException e) {
+            LOGGER.error("Failed to sent email: " + e.getMessage(), e);
+        }
+    }
 
     private MimeMessagePreparator createMimeMessage(final Mail mail) {
         return mimeMessage -> {
@@ -38,6 +47,15 @@ public class SimpleEmailService {
             messageHelper.setTo(mail.getMailTo());
             messageHelper.setSubject(mail.getSubject());
             messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+        };
+    }
+
+    private MimeMessagePreparator createDailyMimeMessage(final Mail mail) {
+        return mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setTo(mail.getMailTo());
+            messageHelper.setSubject(mail.getSubject());
+            messageHelper.setText(mailCreatorService.buildTrelloDailyEmail(mail.getMessage()), true);
         };
     }
 

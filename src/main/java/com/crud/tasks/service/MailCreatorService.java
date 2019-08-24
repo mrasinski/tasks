@@ -45,4 +45,16 @@ public class MailCreatorService {
         context.setVariable("application_functionality", functionality);
         return templateEngine.process("mail/created-trello-card-mail", context);
     }
+
+    public String buildTrelloDailyEmail(String message) {
+
+        Context context = new Context();
+        context.setVariable("message", message);
+        context.setVariable("tasks_url", "https://trello.com/raszi88/boards");
+        context.setVariable("button","Go see your tasks");
+        context.setVariable("admin_config", adminConfig);
+        context.setVariable("show_button", true);
+        context.setVariable("is_friend", true);
+        return templateEngine.process("mail/daily-mail", context);
+    }
 }
