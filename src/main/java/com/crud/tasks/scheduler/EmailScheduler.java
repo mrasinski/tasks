@@ -22,7 +22,7 @@ public class EmailScheduler {
     @Autowired
     private AdminConfig adminConfig;
 
-    @Scheduled(cron = "0 2 13 * * *")
+    @Scheduled(cron = "0 14 13 * * *")
     public void sendInformationEmail() {
         long size = taskRepository.count();
         String temp;
@@ -30,6 +30,6 @@ public class EmailScheduler {
         simpleEmailService.sendDaily(new Mail(
                 adminConfig.getAdminMail(),
                 SUBJECT,
-                "Currently in you base: " + size + " " + temp));
+                "Currently in your base: " + size + " " + temp));
     }
 }
